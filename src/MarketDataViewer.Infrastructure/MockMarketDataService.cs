@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 
 namespace MarketDataViewer.Infrastructure
 {
@@ -20,19 +21,22 @@ namespace MarketDataViewer.Infrastructure
         /// </summary>
         /// <param name="symbol"></param>
         /// <returns></returns>
-        public IObservable<MarketData> StartSubscription(string symbol) 
-            => _subscriptions.GetOrAdd(symbol, CreateSubscription);
+        public Task<IObservable<MarketData>> StartSubscriptionAsync(string symbol) 
+            => Task.FromResult<IObservable<MarketData>>(_subscriptions.GetOrAdd(symbol, CreateSubscription));
 
         /// <summary>
         /// Stops the subscriptions
         /// </summary>
         /// <param name="symbol"></param>
-        public void StopSubscription(string symbol)
+        public Task StopSubscriptionAsync(string symbol)
         {
-            if (_subscriptions.TryRemove(symbol, out Subject<MarketData> symbolDataStream))
+            return Task.Run(() =>
             {
-                symbolDataStream.Dispose();
-            }
+                if (_subscriptions.TryRemove(symbol, out Subject<MarketData> symbolDataStream))
+                {
+                    symbolDataStream.Dispose();
+                }
+            });
         }
 
         /// <summary>

@@ -55,7 +55,7 @@ namespace MarketDataViewer.Controls.Tests.ViewModels
         public void AddSymbol_ShouldCorrectlyAddSymbol(string symbol)
         {
             // arrange
-            _stockSymbolService.Setup(x => x.AddSymbol(It.Is<string>(s => s == symbol)));
+            _stockSymbolService.Setup(x => x.AddSymbolAsync(It.Is<string>(s => s == symbol)));
 
             // act
             var vm = new AddSymbolViewModel
@@ -66,7 +66,7 @@ namespace MarketDataViewer.Controls.Tests.ViewModels
             vm.AddSymbolCommand.Execute();
 
             // assert
-            _stockSymbolService.Verify(x => x.AddSymbol(It.Is<string>(s => s == symbol)));
+            _stockSymbolService.Verify(x => x.AddSymbolAsync(It.Is<string>(s => s == symbol)));
             vm.IsVisible.ShouldBe(false);
         }
     }

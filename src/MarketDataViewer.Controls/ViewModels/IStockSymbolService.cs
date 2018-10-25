@@ -1,10 +1,12 @@
-﻿namespace MarketDataViewer.Controls.ViewModels
+﻿using System.Threading.Tasks;
+
+namespace MarketDataViewer.Controls.ViewModels
 {
     /// <summary>
     /// Interface for adding symbol for subscription.
     /// </summary>
     public interface IStockSymbolService
     {
-        void AddSymbol(string symbol);
+        Task AddSymbolAsync(string symbol);
     }
 }

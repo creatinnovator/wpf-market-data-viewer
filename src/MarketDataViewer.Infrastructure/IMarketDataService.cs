@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace MarketDataViewer.Infrastructure
 {
@@ -7,7 +8,7 @@ namespace MarketDataViewer.Infrastructure
     /// </summary>
     public interface IMarketDataService
     {
-        IObservable<MarketData> StartSubscription(string symbol);
-        void StopSubscription(string symbol);
+        Task<IObservable<MarketData>> StartSubscriptionAsync(string symbol);
+        Task StopSubscriptionAsync(string symbol);
     }
 }

@@ -5,6 +5,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using MarketDataViewer.Infrastructure.Extensions;
+using System.Threading.Tasks;
 
 namespace MarketDataViewer.Controls.ViewModels
 {
@@ -48,7 +49,7 @@ namespace MarketDataViewer.Controls.ViewModels
         /// Adds the symbol for subscription.
         /// </summary>
         /// <param name="symbol"></param>
-        public void AddSymbol(string symbol)
+        public async Task AddSymbolAsync(string symbol)
         {
             if (!_subscriptions.ContainsKey(symbol))
             {
@@ -58,7 +59,7 @@ namespace MarketDataViewer.Controls.ViewModels
                 UpdateMarketData(new MarketData { Symbol = symbol });
 
                 // - start the subscription via the market data service
-                var subscription = _marketDataService.StartSubscription(symbol);
+                var subscription = await _marketDataService.StartSubscriptionAsync(symbol);
                 var disposableSubscription = subscription
                     .ObserveOn(_observeOnScheduler)
                     .Subscribe(UpdateMarketData);
@@ -105,7 +106,7 @@ namespace MarketDataViewer.Controls.ViewModels
                     {
                         MarketDataCollection.Clear();
                         // stop subscription for the symbol
-                        _marketDataService.StopSubscription(s.Key); 
+                        _marketDataService.StopSubscriptionAsync(s.Key).Wait(); 
                         // dispose existing subscription
                         s.Value.Dispose();
                     });

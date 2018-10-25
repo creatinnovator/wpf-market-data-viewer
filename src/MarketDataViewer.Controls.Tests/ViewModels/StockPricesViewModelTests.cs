@@ -1,7 +1,6 @@
 ﻿using MarketDataViewer.Controls.ViewModels;
 using MarketDataViewer.Infrastructure;
 using MarketDataViewer.Infrastructure.Extensions;
-using Microsoft.Reactive.Testing;
 using Moq;
 using NUnit.Framework;
 using Shouldly;
@@ -9,6 +8,7 @@ using System;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 
 namespace MarketDataViewer.Controls.Tests.ViewModels
 {
@@ -25,16 +25,18 @@ namespace MarketDataViewer.Controls.Tests.ViewModels
 
         [Test]
         [TestCase("AAA")]
-        public void AddingSymbol_ShouldBeSuccessful(string symbol)
+        public async Task AddingSymbol_ShouldBeSuccessful(string symbol)
         {
             // arrange
             var marketDataStream = new Subject<MarketData>();
-            _marketDataService.Setup(x => x.StartSubscription(symbol)).Returns(marketDataStream);
+            _marketDataService
+                .Setup(x => x.StartSubscriptionAsync(symbol))
+                .Returns(Task.FromResult<IObservable<MarketData>>(marketDataStream));
 
             var vm = new StockPricesViewModel(_marketDataService.Object, Scheduler.Immediate);
 
             // act
-            vm.AddSymbol(symbol);
+            await vm.AddSymbolAsync(symbol);
             // assert
             vm.MarketDataCollection.ShouldNotBeEmpty();
             vm.MarketDataCollection.ShouldContain(x => x.Symbol == symbol && x.LastPrice == 0 && x.ClosingPrice == 0);
@@ -56,12 +58,14 @@ namespace MarketDataViewer.Controls.Tests.ViewModels
             // arrange
             var symbolList = symbols.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             var marketDataStream = new Subject<MarketData>();
-            symbolList.ForEach(symbol => _marketDataService.Setup(x => x.StartSubscription(symbol)).Returns(marketDataStream));
+            symbolList.ForEach(symbol => _marketDataService
+                .Setup(x => x.StartSubscriptionAsync(symbol))
+                .Returns(Task.FromResult<IObservable<MarketData>>(marketDataStream)));
             
             var vm = new StockPricesViewModel(_marketDataService.Object, Scheduler.Immediate);
 
             // act
-            symbolList.ForEach(symbol => vm.AddSymbol(symbol));
+            symbolList.ForEach(async symbol => await vm.AddSymbolAsync(symbol));
             // assert -- collection should contain the empty market data
             vm.MarketDataCollection.ShouldNotBeEmpty();
             vm.MarketDataCollection.Count.ShouldBe(symbolList.Count());

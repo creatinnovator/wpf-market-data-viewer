@@ -71,11 +71,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketDataViewer.Infrastructure\MarketDataViewer.Infrastructure.csproj">
-      <Project>{C73A92AB-C5F9-42AE-B4A0-399EBC72B1D0}</Project>
+      <Project>{c73a92ab-c5f9-42ae-b4a0-399ebc72b1d0}</Project>
       <Name>MarketDataViewer.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>

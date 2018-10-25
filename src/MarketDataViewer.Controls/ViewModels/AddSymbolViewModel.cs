@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace MarketDataViewer.Controls.ViewModels
 {
@@ -10,7 +11,9 @@ namespace MarketDataViewer.Controls.ViewModels
     {
         public AddSymbolViewModel()
         {
-            AddSymbolCommand = new DelegateCommand(AddSymbol, CanAddSymbol);
+            AddSymbolCommand = new DelegateCommand(
+                async () => await AddSymbolAsync(), 
+                CanAddSymbol);
             IsVisible = false;
 
             AddPropertyChangedHandler(
@@ -48,9 +51,9 @@ namespace MarketDataViewer.Controls.ViewModels
         /// <summary>
         /// Add the symbol via the symbol service.
         /// </summary>
-        private void AddSymbol()
+        private async Task AddSymbolAsync()
         {
-            StockSymbolService.AddSymbol(Symbol);
+            await StockSymbolService.AddSymbolAsync(Symbol);
             IsVisible = false;
         }
 
