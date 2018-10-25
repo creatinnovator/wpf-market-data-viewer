@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Reactive.Concurrency;
+using System.Windows;
 using MarketDataViewer.Controls.ViewModels;
 using MarketDataViewer.Infrastructure;
 using MarketDataViewer.Shell.ViewModels;
@@ -18,12 +19,13 @@ namespace MarketDataViewer.Shell
             containerRegistry.RegisterSingleton<IMarketDataService, MockMarketDataService>();
             containerRegistry.Register<AddSymbolViewModel>();
             containerRegistry.Register<StockPricesViewModel>();
-            containerRegistry.Register<ShellWindowViewModel>();
+            containerRegistry.Register<ShellViewModel>();
+            containerRegistry.RegisterInstance<IScheduler>(DispatcherScheduler.Current);
         }
 
         protected override Window CreateShell()
         {
-            var shellViewModel = Container.Resolve<ShellWindowViewModel>();
+            var shellViewModel = Container.Resolve<ShellViewModel>();
 
             return new ShellWindow { DataContext = shellViewModel };
         }

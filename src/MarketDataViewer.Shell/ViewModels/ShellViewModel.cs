@@ -5,9 +5,9 @@ namespace MarketDataViewer.Shell.ViewModels
     /// <summary>
     /// Shell window's view model
     /// </summary>
-    public class ShellWindowViewModel : ViewModelBase
+    public class ShellViewModel : ViewModelBase
     {
-        public ShellWindowViewModel(
+        public ShellViewModel(
             StockPricesViewModel stockPricesViewModel,
             AddSymbolViewModel addSymbolViewModel)
         {
