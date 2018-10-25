@@ -1,5 +1,5 @@
 # wpf-market-data-viewer
-Prototype/sample app for viewing market using C#/WPF.
+Prototype/sample app for viewing market data using C#/WPF.
 
 ## Technology
 Technology used are as follows:
