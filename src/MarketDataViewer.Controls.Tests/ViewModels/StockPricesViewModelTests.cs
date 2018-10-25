@@ -15,14 +15,12 @@ namespace MarketDataViewer.Controls.Tests.ViewModels
     [TestFixture]
     public class StockPricesViewModelTests
     {
-        Mock<IMarketDataService> _marketDataService;
-        TestScheduler _scheduler;
+        private Mock<IMarketDataService> _marketDataService;
 
         [SetUp]
         public void Setup()
         {
             _marketDataService = new Mock<IMarketDataService>();
-            _scheduler = new TestScheduler();
         }
 
         [Test]

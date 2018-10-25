@@ -15,14 +15,6 @@ namespace MarketDataViewer.Shell.ViewModels
             AddSymbolViewModel = addSymbolViewModel;
 
             AddSymbolViewModel.StockSymbolService = StockPricesViewModel;
-
-            AddPropertyChangedHandler(
-                nameof(ShowAddSymbol), 
-                () => AddSymbolViewModel.IsVisible = ShowAddSymbol);
-
-            AddSymbolViewModel.AddPropertyChangedHandler(
-                nameof(AddSymbolViewModel.IsVisible), 
-                () => ShowAddSymbol = AddSymbolViewModel.IsVisible);
         }
 
         /// <summary>
@@ -34,10 +26,5 @@ namespace MarketDataViewer.Shell.ViewModels
         /// Add symbol view
         /// </summary>
         public AddSymbolViewModel AddSymbolViewModel { get; }
-
-        /// <summary>
-        /// Flag whether to show the Add Symbol view or now
-        /// </summary>
-        public bool ShowAddSymbol { get; set; }
     }
 }

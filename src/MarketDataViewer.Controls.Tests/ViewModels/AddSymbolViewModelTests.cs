@@ -8,7 +8,7 @@ namespace MarketDataViewer.Controls.Tests.ViewModels
     [TestFixture]
     public class AddSymbolViewModelTests
     {
-        Mock<IStockSymbolService> _stockSymbolService;
+        private Mock<IStockSymbolService> _stockSymbolService;
 
         [SetUp]
         public void Setup()

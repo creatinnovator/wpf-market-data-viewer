@@ -103,6 +103,7 @@
     <Compile Include="Views\AddSymbolView.xaml.cs">
       <DependentUpon>AddSymbolView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\IAddSymbolView.cs" />
     <Compile Include="Views\StockPricesView.xaml.cs">
       <DependentUpon>StockPricesView.xaml</DependentUpon>
     </Compile>

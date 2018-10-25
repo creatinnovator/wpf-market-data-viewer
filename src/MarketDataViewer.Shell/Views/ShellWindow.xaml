@@ -5,23 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ext="clr-namespace:MarketDataViewer.Controls.Extensions;assembly=MarketDataViewer.Controls"
         xmlns:converters="clr-namespace:MarketDataViewer.Controls.Converters;assembly=MarketDataViewer.Controls"
+        xmlns:views="clr-namespace:MarketDataViewer.Controls.Views;assembly=MarketDataViewer.Controls"
         mc:Ignorable="d"
         Title="Market Data Viewer" Height="450" Width="800"
         KeyDown="Window_KeyDown"
-        ext:VisibilityBehaviors.ElementToShow="{Binding ElementName=AddSymbolControl}">
+        ext:VisibilityBehaviors.ShowWhenKeystroke="{Binding ElementName=AddSymbolControl}">
     
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     
     <Grid>
-        <ContentControl Content="{Binding Path=StockPricesViewModel, Mode=OneTime}"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch" />
-        <ContentControl Name="AddSymbolControl" 
-                        Content="{Binding Path=AddSymbolViewModel, Mode=OneTime}"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left" 
-                        Visibility="{Binding Path=ShowAddSymbol, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <views:StockPricesView DataContext="{Binding Path=StockPricesViewModel, Mode=OneTime}"
+                               VerticalAlignment="Stretch"
+                               HorizontalAlignment="Stretch" />
+        <views:AddSymbolView Name="AddSymbolControl" 
+                             DataContext="{Binding Path=AddSymbolViewModel, Mode=OneTime}"
+                             VerticalAlignment="Top"
+                             HorizontalAlignment="Left" 
+                             Visibility="{Binding Path=IsVisible, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </Window>
