@@ -1,0 +1,27 @@
+﻿<Window x:Class="MarketDataViewer.Shell.Views.ShellWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ext="clr-namespace:MarketDataViewer.Controls.Extensions;assembly=MarketDataViewer.Controls"
+        xmlns:converters="clr-namespace:MarketDataViewer.Controls.Converters;assembly=MarketDataViewer.Controls"
+        mc:Ignorable="d"
+        Title="Market Data Viewer" Height="450" Width="800"
+        KeyDown="Window_KeyDown"
+        ext:VisibilityBehaviors.ElementToShow="{Binding ElementName=AddSymbolControl}">
+    
+    <Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    
+    <Grid>
+        <ContentControl Content="{Binding Path=StockPricesViewModel, Mode=OneTime}"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch" />
+        <ContentControl Name="AddSymbolControl" 
+                        Content="{Binding Path=AddSymbolViewModel, Mode=OneTime}"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left" 
+                        Visibility="{Binding Path=ShowAddSymbol, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+    </Grid>
+</Window>

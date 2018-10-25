@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="MarketDataViewer.Controls.Views.StockPricesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             Background="LightGray"
+             BorderBrush="DarkGray"
+             BorderThickness="2"
+             Margin="5">
+    <Grid VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" 
+                  ItemsSource="{Binding Path=MarketDataCollection, Mode=OneWay}"
+                  AutoGenerateColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserReorderColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Symbol" 
+                                        Width="80" 
+                                        IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Symbol, Mode=OneWay}" 
+                                       FontWeight="SemiBold"
+                                       Margin="2"
+                                       VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Last Price" 
+                                        Width="100" 
+                                        IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=LastPrice, Mode=OneWay, StringFormat={}{0:#,0.00}}"
+                                       Margin="3"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Closing Price" 
+                                        Width="100" 
+                                        IsReadOnly="True" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=ClosingPrice, Mode=OneWay, StringFormat={}{0:#,0.00}}" 
+                                       Margin="3"
+                                        VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
