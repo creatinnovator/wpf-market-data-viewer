@@ -10,6 +10,7 @@ Technology used are as follows:
 - Reactive eXtensions (RX)
 - Prism
 - Unity for DI/IoC
+- fody, propertychanged.fody - IL weaving of raising property changed event
 - Unit Tests
   - NUnit - unit test framework
   - Moq - mocking framework
