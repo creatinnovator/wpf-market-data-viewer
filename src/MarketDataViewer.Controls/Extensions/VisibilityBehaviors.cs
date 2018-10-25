@@ -45,26 +45,24 @@ namespace MarketDataViewer.Controls.Extensions
             }
         }
 
-        private static void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        private static void OnPreviewKeyDown(object sender, KeyEventArgs e) => 
+            HandleKeyDown(GetElementToShow((DependencyObject)sender), e.Key);
+
+        public static void HandleKeyDown(FrameworkElement elementToShow, Key key)
         {
-            if (e.Key >= Key.A && e.Key <= Key.Z ||
-                e.Key >= Key.D0 && e.Key <= Key.D9 ||
-                e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+            if (key >= Key.A && key <= Key.Z ||
+                key >= Key.D0 && key <= Key.D9 ||
+                key >= Key.NumPad0 && key <= Key.NumPad9)
             {
                 // When A-Z, 0-9 is keyed in, we show the element attached in this property
-                var element = (FrameworkElement)sender;
-                var elementToShow = GetElementToShow(element);
                 if (elementToShow != null)
                 {
                     elementToShow.Visibility = Visibility.Visible;
-                    e.Handled = false;
                 }
             }
-            else if (e.Key == Key.Escape)
+            else if (key == Key.Escape)
             {
                 // When ESC is keyed in, we hide the element attached in this property
-                var element = (FrameworkElement)sender;
-                var elementToShow = GetElementToShow(element);
                 if (elementToShow != null)
                 {
                     elementToShow.Visibility = Visibility.Collapsed;

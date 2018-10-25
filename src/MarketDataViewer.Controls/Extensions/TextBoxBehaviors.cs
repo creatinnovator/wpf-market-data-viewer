@@ -112,20 +112,24 @@ namespace MarketDataViewer.Controls.Extensions
 
         private static void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space)
-            {
-                // We dont allow space
-                e.Handled = true;
-            }
+            e.Handled = !IsInputAccepted(e.Key);
         }
 
         private static void OnTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (e.Text.Any(c => !char.IsLetterOrDigit(c)))
-            {
-                e.Handled = true;
-            }
+            e.Handled = !IsInputAccepted(e.Text);
         }
+
+        public static bool IsInputAccepted(Key key)
+        {
+            return key != Key.Space;
+        }
+
+        public static bool IsInputAccepted(string text)
+        {
+            return text.All(c => char.IsLetterOrDigit(c));
+        }
+
         #endregion
     }
 }
