@@ -41,4 +41,6 @@ Contains the Shell application that hosts the stock price controls/views.
   
 ### MarketDataViewer.Cmd
 Command-line app for viewing prices of a single stock.
-  
+
+## Possible Improvements
+- Use Pub/Sub such as Prism's `EventAggregator` to further promote loose coupling but still allow communication between ViewModels and other components 
